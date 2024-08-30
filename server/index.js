@@ -21,12 +21,13 @@ mongoose.connect(MONGODB_URI)
   .catch((err) => console.error('MongoDB connection error:', err));
 
 // Enable auth routes
-// const authRoutes = require('../server/api/auth');
-// const passcheckRoutes = require('../server/api/passcheck');
+const authRoutes = require('./api/auth');
+const passcheckRoutes = require('./api/passcheck');
 const boardsRoutes = require('./api/boards');
-// app.use('/api/auth', authRoutes);
-// app.use('/api/passcheck', passcheckRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/passcheck', passcheckRoutes);
 app.use('/api/boards', boardsRoutes);
+
 app.use((req, res) => {
   res.status(404).send("Not Found");
 });
