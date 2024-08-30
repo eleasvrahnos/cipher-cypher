@@ -60,7 +60,7 @@ const PuzzleView: React.FC<PuzzleViewProps> = ({
       if (puzzleSolved) {
         try {
 
-          const response = await axios.get(`${process.env.SERVER}/api/passcheck/answerget`, {
+          const response = await axios.get("/api/passcheck/answerget", {
             params: { activeSeries, puzzleNoVisible }
           });
           setAnswer(response.data.answer);
@@ -93,7 +93,7 @@ const PuzzleView: React.FC<PuzzleViewProps> = ({
     if (answer) {
       try {
 
-        const response = await axios.post(`${process.env.SERVER}/api/passcheck/answercheck`, {
+        const response = await axios.post("/api/passcheck/answercheck", {
           activeSeries,
           puzzleNoVisible,
           answer,

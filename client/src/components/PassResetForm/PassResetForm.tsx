@@ -26,7 +26,7 @@ const PassResetForm = () => {
 
     const validateToken = async () => {
       try {
-        const response = await axios.get(`${process.env.SERVER}/api/auth/validate-token?token=${token}`);
+        const response = await axios.get(`/api/auth/validate-token?token=${token}`);
         if (!response.data.valid) {
           setError("Invalid token.");
         }
@@ -53,7 +53,7 @@ const PassResetForm = () => {
     }
 
     try {
-      await axios.post(`${process.env.SERVER}/api/auth/reset-password`, {
+      await axios.post("/api/auth/reset-password", {
         token,
         password,
       });

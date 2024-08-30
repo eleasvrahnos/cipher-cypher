@@ -58,7 +58,7 @@ const Leaderboards: React.FC = () => {
   const fetchLeaderboard = async (category: string) => {
     setLoading(true);
     try {
-      const response = await axios.get<User[]>(`${process.env.SERVER}/api/boards/fetchBoards`, {
+      const response = await axios.get<User[]>("/api/boards/fetchBoards", {
         params: { category },
       });
       setPreviousData(data); // Save current data before updating
@@ -80,7 +80,7 @@ const Leaderboards: React.FC = () => {
     try {
       const token = cookie.get("token");
       if (token) {
-        const res = await axios.post(`${process.env.SERVER}/api/auth/isLogin`, { token });
+        const res = await axios.post("/api/auth/isLogin", { token });
         return res.data;
       }
     } catch (error) {
