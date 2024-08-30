@@ -15,6 +15,11 @@ const boardsRoutes = require('./boards');
 // Use routes
 app.use('/api/boards', boardsRoutes);
 
+app.use('/', (req, res) => {
+    res.send("Server is running.");
+  });
+
+  
 app.use((req, res) => {
     res.status(404).send("Not Found");
   });
