@@ -1,7 +1,13 @@
 {
-  "rewrites": [
+  "builds": [
     {
-      "source": "/api/:path*",
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/api/:path*", 
       "destination": "https://ciphercypher-server-6ff695f2e615545b.vercel.app/api/:path*"
     }
   ]
