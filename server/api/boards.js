@@ -6,7 +6,9 @@ const router = express.Router();
 
 // Boards Auth route - executes when leaderboards are visited (default is TOTAL) and when leaderboard category is changed
 router.get("/fetchBoards", async (req, res) => {
+  console.log('Fetch Boards route hit');
   const { category } = req.query;
+  console.log('Category:', category);
   
   try {
     let leaderboard;

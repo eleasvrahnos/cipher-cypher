@@ -10,15 +10,7 @@ const cookieParser = require('cookie-parser');
 require("dotenv").config();
 const app = express();
 
-const allowedOrigins = ['https://ciphercypher.vercel.app'];
-
-app.use(cors({
-  origin: allowedOrigins,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true, // If using cookies or authentication
-}));
-
-app.options('*', cors()); // Enable pre-flight (OPTIONS) requests for CORS
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
@@ -31,7 +23,7 @@ mongoose.connect(MONGODB_URI)
 // Enable auth routes
 const authRoutes = require('../server/api/auth');
 const passcheckRoutes = require('../server/api/passcheck');
-const boardsRoutes = require('../server/api/boards');
+const boardsRoutes = require('./api/boards');
 app.use('/api/auth', authRoutes);
 app.use('/api/passcheck', passcheckRoutes);
 app.use('/api/boards', boardsRoutes);
