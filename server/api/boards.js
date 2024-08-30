@@ -7,7 +7,7 @@ const router = express.Router();
 // Create indexes (you only need to do this once, not on every request)
 User.createIndexes({ mathmaniaSolved: 1 });
 User.createIndexes({ puzzleparadiseSolved: 1 });
-User.createIndexes({ riddlingrewindSolved: 1 });
+User.createIndexes({ riddlingrewindSolved: 1 }); 
 
 router.get("/fetchBoards", async (req, res) => {
   const category = req.query.category;
