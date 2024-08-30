@@ -15,5 +15,9 @@ const boardsRoutes = require('./boards');
 // Use routes
 app.use('/api/boards', boardsRoutes);
 
+app.use((req, res) => {
+    res.status(404).send("Not Found");
+  });
+
 // Export handler
 module.exports = app;
