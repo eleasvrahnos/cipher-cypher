@@ -25,9 +25,9 @@ mongoose.connect(MONGODB_URI)
 const authRoutes = require('../server/apiList/auth');
 const passcheckRoutes = require('../server/apiList/passcheck');
 const boardsRoutes = require('../server/apiList/boards');
-app.use('/apiList/auth', authRoutes);
-app.use('/apiList/passcheck', passcheckRoutes);
-app.use('/apiList/boards', boardsRoutes);
+app.use('test/apiList/auth', authRoutes);
+app.use('test/apiList/passcheck', passcheckRoutes);
+app.use('test/apiList/boards', boardsRoutes);
 app.use('/', (req, res) => {
   res.send("Server is running.");
 });
