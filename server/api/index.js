@@ -19,10 +19,5 @@ app.use('/', (req, res) => {
     res.send("Server is running.");
   });
 
-  
-app.use((req, res) => {
-    res.status(404).send("Not Found");
-  });
-
 // Export handler
 module.exports = app;
