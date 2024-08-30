@@ -1,15 +1,21 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "index.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "rewrites": [
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/apiList/:path*",
+      "destination": "https://ciphercypher-server-6ff695f2e615545b.vercel.app/apiList/:path*"
+    }
+  ],
+  "beforeFiles": [
     {
       "source": "/apiList/:path*",
       "destination": "https://ciphercypher-server-6ff695f2e615545b.vercel.app/apiList/:path*"
     }
   ]
-  }
+}
