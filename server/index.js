@@ -22,17 +22,12 @@ mongoose.connect(MONGODB_URI)
   .catch((err) => console.error('MongoDB connection error:', err));
 
 // Enable auth routes
-const authRoutes = require('../server/apiList/auth');
-const passcheckRoutes = require('../server/apiList/passcheck');
-const boardsRoutes = require('../server/apiList/boards');
-
-const proxy = require('http-proxy-middleware')
-var apiProxy = proxy('/apiList/boards', {target: 'https://ciphercypher-server-6ff695f2e615545b.vercel.app/apiList/boards'});
-app.use(apiProxy)
-
-app.use('/apiList/auth', authRoutes);
-app.use('/apiList/passcheck', passcheckRoutes);
-// app.use('/apiList/boards', boardsRoutes);
+const authRoutes = require('../server/api/auth');
+const passcheckRoutes = require('../server/api/passcheck');
+const boardsRoutes = require('../server/api/boards');
+app.use('/api/auth', authRoutes);
+app.use('/api/passcheck', passcheckRoutes);
+app.use('/api/boards', boardsRoutes);
 app.use('/', (req, res) => {
   res.send("Server is running.");
 });

@@ -58,7 +58,7 @@ const Leaderboards: React.FC = () => {
   const fetchLeaderboard = async (category: string) => {
     setLoading(true);
     try {
-      const response = await axios.get<User[]>("/apiList/boards/fetchBoards", {
+      const response = await axios.get<User[]>("/api/boards/fetchBoards", {
         params: { category },
       });
       setPreviousData(data); // Save current data before updating
