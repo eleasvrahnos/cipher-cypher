@@ -22,23 +22,19 @@ mongoose.connect(MONGODB_URI)
 
 // Import routes
 const boardsRoutes = require('./boards');
-const authRoutes = require('./auth');
-const passcheckRoutes = require('./passcheck');
+// Add other route imports here if needed
+// const authRoutes = require('./auth');
+// const passcheckRoutes = require('./passcheck');
 
 // Use routes
 app.use('/api/boards', boardsRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/passcheck', passcheckRoutes);
+// app.use('/api/auth', authRoutes);
+// app.use('/api/passcheck', passcheckRoutes);
 
 // 404 Handler
 app.use((req, res) => {
   res.status(404).send("Not Found");
 });
-
-app.use('/', (req, res) => {
-    res.send("Server is running.");
-  });
-  
 
 // Export the handler function for serverless
 module.exports = app;
