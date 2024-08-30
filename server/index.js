@@ -32,6 +32,11 @@ app.use((req, res) => {
   res.status(404).send("Not Found");
 });
 
+app.get('/api/boards/fetchBoards', (req, res) => {
+  console.log('Fetch Boards endpoint hit');
+  res.json({ message: 'Boards fetched successfully' });
+});
+
 // Start server
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
