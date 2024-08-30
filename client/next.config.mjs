@@ -8,8 +8,8 @@ const nextConfig = {
 
     return [
       {
-        source: "/api/:path*",
-        destination: `${backendUrl}/api/:path*`, // Proxy to backend
+        source: "/apiList/:path*",
+        destination: `${backendUrl}/apiList/:path*`, // Proxy to backend
       },
     ];
   },

@@ -68,7 +68,7 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
         for (let seriesIndex = 0; seriesIndex < seriesPuzzleCount.length; seriesIndex++) {
           // If username exists, fetch puzzle statuses for the current series
           if (username) {
-            const response = await axios.get("/api/passcheck/layoutstatus", {
+            const response = await axios.get("/apiList/passcheck/layoutstatus", {
               params: {
                 activeSeries: seriesIndex, // Pass the current series index
                 statusesToSend: JSON.stringify(puzzleStatuses[seriesIndex]),
@@ -174,7 +174,7 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
   // updateDatabase - If user correctly solves, backend database is updated
   const updateDatabase = async (activeSeries: string, puzzleNoVisible: number) => {
     try {
-      await axios.post("/api/passcheck/puzzlesolved", {
+      await axios.post("/apiList/passcheck/puzzlesolved", {
         activeSeries,
         puzzleNoVisible,
         username

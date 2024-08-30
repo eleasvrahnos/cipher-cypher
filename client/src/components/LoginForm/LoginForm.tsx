@@ -29,7 +29,7 @@ const LoginForm = () => {
     };
 
     axios
-      .post("/api/auth/login", payload)
+      .post("/apiList/auth/login", payload)
       .then((res) => {
         cookie.set("token", res.data.token, { expires: 1 });
         setError(null);

@@ -17,7 +17,7 @@ const PassResetRequestForm = () => {
     e.preventDefault();
 
     axios
-      .post("/api/auth/passreset/request", { email })
+      .post("/apiList/auth/passreset/request", { email })
       .then((res) => {
         setError(null);
         setMessage("A password reset link has been sent to your email.");
