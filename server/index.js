@@ -25,9 +25,14 @@ mongoose.connect(MONGODB_URI)
 const authRoutes = require('../server/apiList/auth');
 const passcheckRoutes = require('../server/apiList/passcheck');
 const boardsRoutes = require('../server/apiList/boards');
-app.use('test/apiList/auth', authRoutes);
-app.use('test/apiList/passcheck', passcheckRoutes);
-app.use('test/apiList/boards', boardsRoutes);
+
+const proxy = require('http-proxy-middleware')
+var apiProxy = proxy('/apiList/boards', {target: 'https://ciphercypher-server-6ff695f2e615545b.vercel.app/apiList/boards'});
+app.use(apiProxy)
+
+app.use('/apiList/auth', authRoutes);
+app.use('/apiList/passcheck', passcheckRoutes);
+// app.use('/apiList/boards', boardsRoutes);
 app.use('/', (req, res) => {
   res.send("Server is running.");
 });
