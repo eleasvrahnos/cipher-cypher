@@ -4,7 +4,7 @@ const nextConfig = {
   async rewrites() {
     // Uses localhost for development, server for production
     const isDev = process.env.NODE_ENV === 'development';
-    const backendUrl = isDev ? `http://localhost:5000` : process.env.SERVER;
+    const backendUrl = isDev ? `http://localhost:5000` : `https://ciphercypher-server-6ff695f2e615545b.vercel.app`;
 
     return [
       {
