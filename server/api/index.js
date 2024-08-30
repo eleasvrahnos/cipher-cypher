@@ -1,40 +1,28 @@
-// api/index.js - The serverless function handler for API routes
-
+// /api/index.js
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-require("dotenv").config();
 
-// Create an instance of Express
+// Initialize Express
 const app = express();
-
-// Middleware
-app.use(cors());
+// Middleware for CORS
+app.use(cors({
+    origin: 'https://ciphercypher.vercel.app/',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['X-Requested-With', 'Content-Type', 'Authorization']
+  }));
 app.use(express.json());
 app.use(cookieParser());
 
-// MongoDB connection
-const MONGODB_URI = process.env.MONGODB_URI;
-mongoose.connect(MONGODB_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.error('MongoDB connection error:', err));
-
 // Import routes
 const boardsRoutes = require('./boards');
-// Add other route imports here if needed
-// const authRoutes = require('./auth');
-// const passcheckRoutes = require('./passcheck');
 
 // Use routes
 app.use('/api/boards', boardsRoutes);
-// app.use('/api/auth', authRoutes);
-// app.use('/api/passcheck', passcheckRoutes);
 
-// 404 Handler
 app.use((req, res) => {
-  res.status(404).send("Not Found");
-});
+    res.status(404).send("Not Found");
+  });
 
-// Export the handler function for serverless
+// Export handler
 module.exports = app;

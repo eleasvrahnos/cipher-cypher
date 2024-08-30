@@ -27,12 +27,9 @@ const boardsRoutes = require('./api/boards');
 app.use('/api/auth', authRoutes);
 app.use('/api/passcheck', passcheckRoutes);
 app.use('/api/boards', boardsRoutes);
-
 app.use((req, res) => {
   res.status(404).send("Not Found");
 });
-
-
 
 // Start server
 const PORT = process.env.PORT;
