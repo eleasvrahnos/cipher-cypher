@@ -25,11 +25,5 @@
       "src": "/(.*)",
       "dest": "/client/$1"
     }
-  ],
-  "redirects": [
-    {
-      "source": "/api/:path*", 
-      "destination": "https://ciphercypher-server-6ff695f2e615545b.vercel.app/api/:path*"
-    }
   ]
 }
