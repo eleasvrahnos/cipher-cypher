@@ -1,28 +1,29 @@
-// /api/index.js
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-// Initialize Express
+require("dotenv").config();
 const app = express();
-// Middleware for CORS
-app.use(cors({
-    origin: 'https://ciphercypher.vercel.app/',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['X-Requested-With', 'Content-Type', 'Authorization']
-  }));
+
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-// Import routes
-const boardsRoutes = require('./boards');
+// MongoDB connection
+const MONGODB_URI = process.env.MONGODB_URI;
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('MongoDB connected'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
-// Use routes
+// Enable your routes
+const boardsRoutes = require('./boards');
 app.use('/api/boards', boardsRoutes);
 
+// Handle 404
 app.use((req, res) => {
-    res.status(404).send("Not Found");
-  });
+  res.status(404).send("Not Found");
+});
 
-// Export handler
+// Export the Express app for Vercel
 module.exports = app;
