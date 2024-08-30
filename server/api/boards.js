@@ -4,15 +4,22 @@ const express = require("express");
 const User = require("../models/User");
 const router = express.Router();
 
-// Boards Auth route - executes when leaderboards are visited (default is TOTAL) and when leaderboard category is changed
+// Create indexes (you only need to do this once, not on every request)
+User.createIndexes({ mathmaniaSolved: 1 });
+User.createIndexes({ puzzleparadiseSolved: 1 });
+User.createIndexes({ riddlingrewindSolved: 1 });
+
 router.get("/fetchBoards", async (req, res) => {
   const category = req.query.category;
+
+  console.log("Received request for category:", category);
   
   try {
     let leaderboard;
 
     switch (category) {
       case "mathmania":
+        console.log("Querying mathmania leaderboard...");
         leaderboard = await User.find({
           mathmaniaSolved: { $exists: true, $not: { $size: 0 } },
         })
@@ -23,6 +30,7 @@ router.get("/fetchBoards", async (req, res) => {
         break;
 
       case "puzzleparadise":
+        console.log("Querying puzzleparadise leaderboard...");
         leaderboard = await User.find({
           puzzleparadiseSolved: { $exists: true, $not: { $size: 0 } },
         })
@@ -33,6 +41,7 @@ router.get("/fetchBoards", async (req, res) => {
         break;
 
       case "riddlingrewind":
+        console.log("Querying riddlingrewind leaderboard...");
         leaderboard = await User.find({
           riddlingrewindSolved: { $exists: true, $not: { $size: 0 } },
         })
@@ -43,6 +52,7 @@ router.get("/fetchBoards", async (req, res) => {
         break;
 
       case "total":
+        console.log("Querying total leaderboard...");
         leaderboard = await User.aggregate([
           {
             $addFields: {
@@ -71,11 +81,14 @@ router.get("/fetchBoards", async (req, res) => {
         break;
 
       default:
+        console.log("Invalid category:", category);
         return res.status(400).json({ error: "Invalid category" });
     }
 
+    console.log("Query successful for category:", category);
     res.status(200).json(leaderboard);
   } catch (error) {
+    console.error("Error occurred:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
