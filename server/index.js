@@ -12,12 +12,13 @@ const app = express();
 
 const allowedOrigins = ['https://ciphercypher.vercel.app'];
 
-// Middleware
 app.use(cors({
   origin: allowedOrigins,
-  methods: ['GET', 'POST'],
-  credentials: true, // Enable this if you're using cookies or other credentials
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true, // If using cookies or authentication
 }));
+
+app.options('*', cors()); // Enable pre-flight (OPTIONS) requests for CORS
 app.use(express.json());
 app.use(cookieParser());
 
