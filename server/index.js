@@ -10,8 +10,14 @@ const cookieParser = require('cookie-parser');
 require("dotenv").config();
 const app = express();
 
+const allowedOrigins = ['https://ciphercypher.vercel.app'];
+
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST'],
+  credentials: true, // Enable this if you're using cookies or other credentials
+}));
 app.use(express.json());
 app.use(cookieParser());
 
