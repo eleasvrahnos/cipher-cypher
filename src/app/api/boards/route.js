@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const User = require("@/models/User");
+require("dotenv").config();
 
 // Connect to MongoDB
 const connectToDatabase = async () => {
   if (mongoose.connection.readyState === 0) {
-    await mongoose.connect(`${process.env.MONGODB_URI}`);
+    await mongoose.connect(process.env.MONGODB_URI);
   }
 };
 
