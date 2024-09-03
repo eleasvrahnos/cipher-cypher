@@ -15,6 +15,10 @@ export async function POST(request) {
   await connectToDatabase(); // Ensure database connection
 
   try {
+    // Ensure answer is actually in database first
+
+
+    
     if (storedAnswers[activeSeries] && storedAnswers[activeSeries][puzzleNoVisible - 1]) {
       const correctAnswer = storedAnswers[activeSeries][puzzleNoVisible - 1];
       return new Response(JSON.stringify({ answer: correctAnswer }), { status: 200, headers: { "Content-Type": "application/json" } });

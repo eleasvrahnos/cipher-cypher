@@ -161,26 +161,6 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
       );
       return updatedStatuses;
     });
-
-    if (newStatus && username) {
-      updateDatabase(activeSeries, puzzleNoVisible);
-    }
-  };
-
-  // updateDatabase - If user correctly solves, backend database is updated
-  const updateDatabase = async (activeSeries: string, puzzleNoVisible: number) => {
-    try {
-      await axios.post("/api/passcheck/puzzlesolved", {
-        activeSeries,
-        puzzleNoVisible,
-        username
-      });
-
-    } catch (err: any) {
-
-      console.error("Database insertion error:", err);
-
-    }
   };
 
   return (
