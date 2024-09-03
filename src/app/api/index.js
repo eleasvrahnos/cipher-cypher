@@ -13,6 +13,7 @@ app.use('/api/boards', boardsRouter); // Mount router on /api
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI);
+console.log("CONNECTION IN INDEX.JS");
 
 // Start the server
 app.listen(3000, () => {

@@ -21,7 +21,6 @@ export async function POST(request) {
     switch (category) {
       case "mathmania":
         console.log("Querying mathmania leaderboard...");
-        console.log("User model:", User);
         leaderboard = await User.find({
           mathmaniaSolved: { $exists: true, $not: { $size: 0 } },
         })

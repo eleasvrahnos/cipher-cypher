@@ -43,6 +43,11 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// Add indexes to optimize queries
+userSchema.index({ mathmaniaSolved: -1 });
+userSchema.index({ puzzleparadiseSolved: -1 });
+userSchema.index({ riddlingrewindSolved: -1 });
+
 // Mongoose middleware that runs before a document is saved to the database, in case password was modified
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
@@ -71,9 +76,11 @@ let User;
 try {
   // Try to get the model if it's already compiled
   User = mongoose.model('User');
+  console.log("CONNECTION IN USER, RECONNECT");
 } catch (error) {
   // If the model is not compiled, create it
   User = mongoose.model('User', userSchema);
+  console.log("CONNECTION IN USER, CONNECT");
 }
 
 module.exports = User;
