@@ -1,5 +1,0 @@
-{
-  "redirects": [
-    { "source": "/api/(.*)", "destination": "https://ciphercypher.vercel.app/api/$1" }
-  ]
-}

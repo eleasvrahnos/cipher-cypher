@@ -1,24 +1,26 @@
-// boards.js - API designed to get data to populate leaderboards
+const mongoose = require('mongoose');
+const User = require("@/models/User");
 
-const express = require("express");
-const User = require("../models/User");
-const router = express.Router();
+// Connect to MongoDB
+const connectToDatabase = async () => {
+  if (mongoose.connection.readyState === 0) {
+    await mongoose.connect(process.env.MONGODB_URI);
+  }
+};
 
-// Ensure indexes are created on relevant fields for improved performance
-User.createIndexes({ mathmaniaSolved: 1 });
-User.createIndexes({ puzzleparadiseSolved: 1 });
-User.createIndexes({ riddlingrewindSolved: 1 });
-
-router.post("/fetchBoards", async (req, res) => {
-  const { category } = req.body; // Extract category from the request body
+export async function POST(request) {
+  const { category } = await request.json(); // Extract category from the request body
   console.log("Received category:", category);
-  
+
+  await connectToDatabase(); // Ensure database connection
+
   try {
     let leaderboard;
 
     switch (category) {
       case "mathmania":
         console.log("Querying mathmania leaderboard...");
+        console.log("User model:", User);
         leaderboard = await User.find({
           mathmaniaSolved: { $exists: true, $not: { $size: 0 } },
         })
@@ -71,8 +73,7 @@ router.post("/fetchBoards", async (req, res) => {
             $sort: { totalSolved: -1 },
           },
           {
-            $limit: 10,
-          },
+            $limit: 10 },
           {
             $project: { username: 1, totalSolved: 1 },
           },
@@ -81,15 +82,22 @@ router.post("/fetchBoards", async (req, res) => {
 
       default:
         console.log("Invalid category:", category);
-        return res.status(400).json({ error: "Invalid category" });
+        return new Response(JSON.stringify({ error: "Invalid category" }), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        });
     }
 
     console.log("Query successful for category:", category);
-    res.status(200).json(leaderboard);
+    return new Response(JSON.stringify(leaderboard), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error("Error occurred:", error);
-    res.status(500).json({ error: "Internal server error" });
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
-});
-
-module.exports = router;
+}

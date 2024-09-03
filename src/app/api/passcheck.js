@@ -2,7 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
+const User = require("../../models/User");
 
 // Answer Auth route - executes when user clicks button confirming puzzle answer
 router.post("/answercheck", async (req, res) => { 
