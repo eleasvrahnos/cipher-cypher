@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const User = require("@/models/User");
 require("dotenv").config();
 
@@ -22,11 +22,11 @@ export async function POST(request) {
       case "mathmania":
         console.log("Querying mathmania leaderboard...");
         leaderboard = await User.find({
-          mathmaniaSolved: { $exists: true, $not: { $size: 0 } },
+          mathmaniaSolved: { $not: { $size: 0 } },
         })
+          .select("username mathmaniaSolved")
           .sort({ mathmaniaSolved: -1 })
           .limit(10)
-          .select("username mathmaniaSolved")
           .lean();
         break;
 
@@ -73,7 +73,8 @@ export async function POST(request) {
             $sort: { totalSolved: -1 },
           },
           {
-            $limit: 10 },
+            $limit: 10,
+          },
           {
             $project: { username: 1, totalSolved: 1 },
           },
@@ -84,20 +85,20 @@ export async function POST(request) {
         console.log("Invalid category:", category);
         return new Response(JSON.stringify({ error: "Invalid category" }), {
           status: 400,
-          headers: { 'Content-Type': 'application/json' },
+          headers: { "Content-Type": "application/json" },
         });
     }
 
     console.log("Query successful for category:", category);
     return new Response(JSON.stringify(leaderboard), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
     console.error("Error occurred:", error);
     return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 }
