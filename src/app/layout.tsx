@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { UserProvider } from "@/components/UserContext/UserContext";
+import { GoogleTagManager } from '@next/third-parties/google';
 
 // Default Next.js font
 const inter = Inter({ subsets: ["latin"] });
@@ -23,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <UserProvider>
+      
       <html lang="en">
+        <GoogleTagManager gtmId="G-TNM2FTFDH9" />
         <body className={inter.className}>{children}</body>
       </html>
     </UserProvider>
