@@ -56,7 +56,7 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
         ])
       }, 250);
     }
-  }, [username]);
+  }, [username, puzzleVisible]);
   
   // Occurs whenever activeSeries or username changes, layout status is updated for preloading
   useEffect(() => {
@@ -162,6 +162,7 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
       return updatedStatuses;
     });
   };
+
 
   return (
     <div className="relative flex flex-grow">

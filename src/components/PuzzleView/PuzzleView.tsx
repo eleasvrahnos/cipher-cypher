@@ -57,12 +57,13 @@ const PuzzleView: React.FC<PuzzleViewProps> = ({
   // Fetches answer to auto-fill text field if user has already solved puzzle, clears input field on logout
   useEffect(() => {
     const fetchAnswer = async () => {
-      if (puzzleSolved) {
+      if (username && puzzleSolved) {
         try {
 
           const response = await axios.post("/api/passcheck/answerget", {
             activeSeries,
-            puzzleNoVisible
+            puzzleNoVisible,
+            username
           });
           setAnswer(response.data.answer);
 
@@ -71,9 +72,6 @@ const PuzzleView: React.FC<PuzzleViewProps> = ({
           console.error("Error fetching answer:", err);
 
         }
-      }
-      else if (!username && puzzleSolved) {
-        setAnswer("");
       }
     };
 
