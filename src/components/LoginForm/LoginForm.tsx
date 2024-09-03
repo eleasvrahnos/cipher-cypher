@@ -82,7 +82,7 @@ const LoginForm = () => {
             </label>
             <input
               id="password"
-              pattern="[a-zA-Z0-9!@#$%&+]+"
+              pattern="/^[a-zA-Z0-9~`!@#$%^&*()_\-+={[}\]|\\:;<,>.?/]+$/"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
