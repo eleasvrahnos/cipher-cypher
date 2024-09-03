@@ -6,20 +6,14 @@ const connectDB = require('./db'); // Import your connection function
 require("dotenv").config();
 const app = express();
 
-const allowedOrigins = ['http://localhost:3001']; // Replace with your client domain(s)
-
 app.use(cors({
-  origin: function(origin, callback) {
-    // Allow requests with no origin (e.g., mobile apps, Postman)
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      return callback(null, true);
-    }
-    return callback(new Error('Not allowed by CORS'));
-  },
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  allowedHeaders: 'X-Requested-With, Content-Type, Authorization',
-  credentials: true // Allow credentials (cookies)
+  origin: 'https://ciphercypher.vercel.app/', // Adjust this to your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow specific methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
 }));
+
+app.options('*', cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -27,9 +21,9 @@ app.use(cookieParser());
 connectDB();
 
 // Enable your routes
-const authRoutes = require('./api/auth');
-const passcheckRoutes = require('./api/passcheck');
-const boardsRoutes = require('./api/boards');
+const authRoutes = require('/api/auth');
+const passcheckRoutes = require('/api/passcheck');
+const boardsRoutes = require('/api/boards');
 app.use('/api/auth', authRoutes);
 app.use('/api/passcheck', passcheckRoutes);
 app.use('/api/boards', boardsRoutes);

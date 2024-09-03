@@ -10,7 +10,6 @@ User.createIndexes({ puzzleparadiseSolved: 1 });
 User.createIndexes({ riddlingrewindSolved: 1 });
 
 router.post("/fetchBoards", async (req, res) => {
-  console.log("test");
   const { category } = req.body; // Extract category from the request body
   console.log("Received category:", category);
   
