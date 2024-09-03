@@ -7,7 +7,7 @@ require("dotenv").config();
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3001', // Adjust this to the URL of your frontend
+  origin: 'https://ciphercypher.vercel.app/', // Adjust this to the URL of your frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true // Include cookies in the requests
