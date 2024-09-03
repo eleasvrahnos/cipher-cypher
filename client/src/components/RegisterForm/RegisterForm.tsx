@@ -32,7 +32,7 @@ const RegisterForm = () => {
     }
 
     try {
-      await axios.post("/apiList/auth/register", {
+      await axios.post("/api/auth/register", {
         username,
         email,
         password,

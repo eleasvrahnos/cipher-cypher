@@ -4,15 +4,14 @@ const express = require("express");
 const User = require("../models/User");
 const router = express.Router();
 
-// Create indexes (you only need to do this once, not on every request)
+// Ensure indexes are created on relevant fields for improved performance
 User.createIndexes({ mathmaniaSolved: 1 });
 User.createIndexes({ puzzleparadiseSolved: 1 });
-User.createIndexes({ riddlingrewindSolved: 1 }); 
+User.createIndexes({ riddlingrewindSolved: 1 });
 
-router.get("/fetchBoards", async (req, res) => {
-  const category = req.query.category;
-
-  console.log("Received request for category:", category);
+router.post("/fetchBoards", async (req, res) => {
+  const { category } = req.body; // Extract category from the request body
+  console.log("Received category:", category);
   
   try {
     let leaderboard;

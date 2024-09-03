@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({ isSeries, title }) => {
     try {
       const token = cookie.get("token");
       if (token) {
-        const res = await axios.post("/apiList/auth/isLogin", { token });
+        const res = await axios.post("/api/auth/isLogin", { token });
         return res.data;
       }
     } catch (error) {

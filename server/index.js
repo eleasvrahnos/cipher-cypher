@@ -1,26 +1,25 @@
-// index.js - The file that runs the server, which hosts the database and user authentication routes
-
-// IMPORTS - Express, Mongoose, CORS, Cookie Parser
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const connectDB = require('./db'); // Import your connection function
 
-// Allow environment variables and start Express
 require("dotenv").config();
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3001', // Adjust this to the URL of your frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // Include cookies in the requests
+}));
+app.options('*', cors());
 app.use(express.json());
 app.use(cookieParser());
 
-// MongoDB connection
-const MONGODB_URI = process.env.MONGODB_URI;
-mongoose.connect(MONGODB_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+// Connect to MongoDB
+connectDB();
 
-// Enable auth routes
+// Enable your routes
 const authRoutes = require('./api/auth');
 const passcheckRoutes = require('./api/passcheck');
 const boardsRoutes = require('./api/boards');
@@ -28,16 +27,17 @@ app.use('/api/auth', authRoutes);
 app.use('/api/passcheck', passcheckRoutes);
 app.use('/api/boards', boardsRoutes);
 
+app.get('/', (req, res) => {
+  res.status(200).send('Server is running.');
+});
+
 app.use((req, res) => {
   res.status(404).send("Not Found");
 });
 
-app.get('/api/boards/fetchBoards', (req, res) => {
-  console.log('Fetch Boards endpoint hit');
-  res.json({ message: 'Boards fetched successfully' });
-});
+// For Vercel
+module.exports = app;
 
-// Start server
-const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
+// Start server (uncomment this part for local development)
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
