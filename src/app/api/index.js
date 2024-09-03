@@ -12,7 +12,7 @@ app.use(express.json()); // For parsing application/json
 app.use('/api/boards', boardsRouter); // Mount router on /api
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(`${process.env.MONGODB_URI}`);
 
 // Start the server
 app.listen(3000, () => {
