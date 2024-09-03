@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const User = require("@/models/User");
+import mongoose from 'mongoose';
+import User from '@/models/User';
 require("dotenv").config();
 
 // Connect to MongoDB
@@ -11,7 +11,6 @@ const connectToDatabase = async () => {
 
 export async function POST(request) {
   const { category } = await request.json(); // Extract category from the request body
-  console.log("Received category:", category);
 
   await connectToDatabase(); // Ensure database connection
 
@@ -20,7 +19,6 @@ export async function POST(request) {
 
     switch (category) {
       case "mathmania":
-        console.log("Querying mathmania leaderboard...");
         leaderboard = await User.find({
           mathmaniaSolved: { $not: { $size: 0 } },
         })
@@ -31,7 +29,6 @@ export async function POST(request) {
         break;
 
       case "puzzleparadise":
-        console.log("Querying puzzleparadise leaderboard...");
         leaderboard = await User.find({
           puzzleparadiseSolved: { $exists: true, $not: { $size: 0 } },
         })
@@ -42,7 +39,6 @@ export async function POST(request) {
         break;
 
       case "riddlingrewind":
-        console.log("Querying riddlingrewind leaderboard...");
         leaderboard = await User.find({
           riddlingrewindSolved: { $exists: true, $not: { $size: 0 } },
         })
@@ -53,7 +49,6 @@ export async function POST(request) {
         break;
 
       case "total":
-        console.log("Querying total leaderboard...");
         leaderboard = await User.aggregate([
           {
             $addFields: {
@@ -82,14 +77,12 @@ export async function POST(request) {
         break;
 
       default:
-        console.log("Invalid category:", category);
         return new Response(JSON.stringify({ error: "Invalid category" }), {
           status: 400,
           headers: { "Content-Type": "application/json" },
         });
     }
 
-    console.log("Query successful for category:", category);
     return new Response(JSON.stringify(leaderboard), {
       status: 200,
       headers: { "Content-Type": "application/json" },

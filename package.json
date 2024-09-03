@@ -13,10 +13,13 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.6.0",
     "next": "14.2.5",
+    "nodemailer": "^6.9.14",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "validator": "^13.12.0"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",

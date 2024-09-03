@@ -63,24 +63,20 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
     const fetchAnswersForAllSeries = async () => {
       try {
         const updatedPuzzleStatuses = [...puzzleStatuses];
-  
         // Loop through each series
         for (let seriesIndex = 0; seriesIndex < seriesPuzzleCount.length; seriesIndex++) {
           // If username exists, fetch puzzle statuses for the current series
           if (username) {
-            const response = await axios.get("/api/passcheck/layoutstatus", {
-              params: {
-                activeSeries: seriesIndex, // Pass the current series index
-                statusesToSend: JSON.stringify(puzzleStatuses[seriesIndex]),
-                username,
-              },
+            const response = await axios.post("/api/passcheck/layoutstatus", {
+              activeSeries: seriesIndex, // Pass the current series index
+              statusesToSend: JSON.stringify(puzzleStatuses[seriesIndex]),
+              username,
             });
   
             // Update the puzzle statuses for the current series
             updatedPuzzleStatuses[seriesIndex] = response.data.statuses;
           }
         }
-  
         // Set the updated puzzle statuses for all series
         setPuzzleStatuses(updatedPuzzleStatuses);
   

@@ -76,11 +76,9 @@ let User;
 try {
   // Try to get the model if it's already compiled
   User = mongoose.model('User');
-  console.log("CONNECTION IN USER, RECONNECT");
 } catch (error) {
   // If the model is not compiled, create it
   User = mongoose.model('User', userSchema);
-  console.log("CONNECTION IN USER, CONNECT");
 }
 
 module.exports = User;
