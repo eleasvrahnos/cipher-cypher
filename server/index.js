@@ -6,13 +6,7 @@ const connectDB = require('./db'); // Import your connection function
 require("dotenv").config();
 const app = express();
 
-app.use(cors({
-  origin: 'https://ciphercypher.vercel.app/', // Adjust this to the URL of your frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true // Include cookies in the requests
-}));
-app.options('*', cors());
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
