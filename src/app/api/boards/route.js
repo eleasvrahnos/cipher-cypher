@@ -19,33 +19,84 @@ export async function POST(request) {
 
     switch (category) {
       case "mathmania":
-        leaderboard = await User.find({
-          mathmaniaSolved: { $not: { $size: 0 } },
-        })
-          .select("username mathmaniaSolved")
-          .sort({ mathmaniaSolved: -1 })
-          .limit(10)
-          .lean();
+        leaderboard = await User.aggregate([
+          {
+            $match: {
+              mathmaniaSolved: { $not: { $size: 0 } }
+            }
+          },
+          {
+            $addFields: {
+              mathmaniaSolvedCount: { $size: "$mathmaniaSolved" }
+            }
+          },
+          {
+            $sort: { mathmaniaSolvedCount: -1 }
+          },
+          {
+            $limit: 10
+          },
+          {
+            $project: {
+              username: 1,
+              mathmaniaSolved: 1
+            }
+          }
+        ])
         break;
 
       case "puzzleparadise":
-        leaderboard = await User.find({
-          puzzleparadiseSolved: { $exists: true, $not: { $size: 0 } },
-        })
-          .sort({ puzzleparadiseSolved: -1 })
-          .limit(10)
-          .select("username puzzleparadiseSolved")
-          .lean();
+        leaderboard = await User.aggregate([
+          {
+            $match: {
+              puzzleparadiseSolved: { $not: { $size: 0 } }
+            }
+          },
+          {
+            $addFields: {
+              puzzleparadiseSolvedCount: { $size: "$puzzleparadiseSolved" }
+            }
+          },
+          {
+            $sort: { puzzleparadiseSolvedCount: -1 }
+          },
+          {
+            $limit: 10
+          },
+          {
+            $project: {
+              username: 1,
+              puzzleparadiseSolved: 1
+            }
+          }
+        ])
         break;
 
       case "riddlingrewind":
-        leaderboard = await User.find({
-          riddlingrewindSolved: { $exists: true, $not: { $size: 0 } },
-        })
-          .sort({ riddlingrewindSolved: -1 })
-          .limit(10)
-          .select("username riddlingrewindSolved")
-          .lean();
+        leaderboard = await User.aggregate([
+          {
+            $match: {
+              riddlingrewindSolved: { $not: { $size: 0 } }
+            }
+          },
+          {
+            $addFields: {
+              riddlingrewindSolvedCount: { $size: "$riddlingrewindSolved" }
+            }
+          },
+          {
+            $sort: { riddlingrewindSolvedCount: -1 }
+          },
+          {
+            $limit: 10
+          },
+          {
+            $project: {
+              username: 1,
+              riddlingrewindSolved: 1
+            }
+          }
+        ])
         break;
 
       case "total":
