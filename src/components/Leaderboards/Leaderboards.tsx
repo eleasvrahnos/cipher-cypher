@@ -137,7 +137,7 @@ const Leaderboards: React.FC = () => {
   return (
     <div className="flex min-h-screen flex-col items-center bg-gray-900 p-8 text-white">
       <BackButton handleBackClick={handleBackClick} />
-      <h1 className="mb-8 text-4xl font-bold">Leaderboards</h1>
+      <h1 className="mt-10 mb-8 text-4xl font-bold">Leaderboards</h1>
       <div className="w-full max-w-3xl">
         <div className="mb-3">
           <button
@@ -152,7 +152,7 @@ const Leaderboards: React.FC = () => {
             Total Puzzles Solved
           </button>
         </div>
-        <div className="mb-8 flex space-x-4">
+        <div className="mb-8 flex space-y-1 sm:space-y-0 sm:space-x-4 flex-col sm:flex-row">
           {categories.slice(0, -1).map((category) => (
             <button
               key={category.key}
@@ -169,13 +169,13 @@ const Leaderboards: React.FC = () => {
           ))}
         </div>
       </div>
-      <div className="relative w-full max-w-3xl">
+      <div className="relative w-full max-w-3xl flex justify-center">
         <table className="w-full table-auto overflow-hidden rounded-lg bg-gray-800 text-left shadow-lg">
           <thead>
             <tr>
-              <th className="bg-gray-700 px-4 py-2">Rank</th>
+              <th className="bg-gray-700 px-3 py-2">Rank</th>
               <th className="bg-gray-700 px-4 py-2">Username</th>
-              <th className="bg-gray-700 px-4 py-2">Solved</th>
+              <th className="bg-gray-700 pr-4 py-2">Solved</th>
             </tr>
           </thead>
           <tbody>
@@ -183,13 +183,13 @@ const Leaderboards: React.FC = () => {
               Array.from({ length: rowCount }, (_, index) => (
                 <tr key={index} className="border-t border-gray-700">
                   <td className="px-4 py-2">
-                    <div className="h-6 w-1/4 animate-pulse rounded bg-gray-700"></div>
+                    <div className="h-6 w-10 animate-pulse rounded bg-gray-700"></div>
                   </td>
-                  <td className="px-4 py-2">
-                    <div className="h-6 w-1/2 animate-pulse rounded bg-gray-700"></div>
+                  <td className="px-3 py-2">
+                    <div className="h-6 w-10 animate-pulse rounded bg-gray-700"></div>
                   </td>
-                  <td className="px-4 py-2">
-                    <div className="h-6 w-1/3 animate-pulse rounded bg-gray-700"></div>
+                  <td className="pr-4 py-2">
+                    <div className="h-6 w-10 animate-pulse rounded bg-gray-700"></div>
                   </td>
                 </tr>
               ))
@@ -214,7 +214,7 @@ const Leaderboards: React.FC = () => {
                 >
                   <td className="px-4 py-2">{index + 1}</td>
                   <td className="px-4 py-2">{user.username}</td>
-                  <td className="px-4 py-2">{getSolvedCount(user)}</td>
+                  <td className="px-0 py-2">{getSolvedCount(user)}</td>
                 </tr>
               ))
             )}
