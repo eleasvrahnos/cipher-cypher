@@ -123,7 +123,7 @@ const PuzzleView: React.FC<PuzzleViewProps> = ({
           className="object-contain"
         />
       </div>
-      <div className="flex flex-row justify-center pb-5">
+      <div className="flex flex-row justify-center pb-5 mx-3">
         <div className="relative flex flex-col items-center">
           <div className="absolute left-0 top-0 p-2">
             {!puzzleSolved && activeSeries !== "mathmania" && currLength}
@@ -139,14 +139,14 @@ const PuzzleView: React.FC<PuzzleViewProps> = ({
             readOnly={puzzleSolved === true}
             spellCheck={false}
             maxLength={100}
-            className={`w-100 rounded-lg p-4 text-center text-xl shadow focus:outline-none ${
+            className={`w-full rounded-lg p-4 text-center text-lg shadow focus:outline-none ${
               puzzleSolved === true
                 ? "bg-green-400"
                 : puzzleSolved === false
                   ? "bg-red-400"
                   : "bg-white"
             }`}
-            placeholder="Type your answer..."
+            placeholder="Type your answer"
             style={{ lineHeight: "1.5" }}
           />
         </div>
