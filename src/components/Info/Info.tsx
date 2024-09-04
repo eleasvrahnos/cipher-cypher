@@ -14,23 +14,14 @@ const Info = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black font-sans text-white">
-      <div className="sticky top-0">
-        <BackButton handleBackClick={handleBackClick} />
-      </div>
-      <div className="flex flex-col items-center space-y-6 p-8">
-        <div className="flex items-center justify-center space-x-8">
-          <img
-            className="h-16 w-16 animate-pulse"
-            src="/icons/puzzlepiece.png"
-            alt="Puzzle Piece"
-          />
-          <div className="flex flex-col space-y-3 text-center">
-            <h1 className="text-center text-5xl font-bold tracking-wide">
-              WELCOME TO CIPHER CYPHER
-            </h1>
-            <p className="italic">Created by @ded010 on Discord</p>
-          </div>
+    <div className="min-h-screen overflow-y-auto bg-gradient-to-b from-gray-900 to-black font-sans text-white">
+      <BackButton handleBackClick={handleBackClick} />
+      <div className="mt-10 flex flex-col items-center p-8">
+        <div className="flex flex-col items-center justify-center space-y-3">
+          <h1 className="text-center text-3xl font-bold tracking-wide sm:text-5xl">
+            WELCOME TO CIPHER CYPHER
+          </h1>
+          <p className="italic">Created by @ded010 on Discord</p>
           <img
             className="h-16 w-16 animate-pulse"
             src="/icons/puzzlepiece.png"
@@ -38,7 +29,7 @@ const Info = () => {
           />
         </div>
       </div>
-      <div className="pb-8">
+      <div className="px-8 pb-8">
         <div className="mx-auto max-w-4xl space-y-16 rounded-lg bg-gray-800 bg-opacity-70 px-10 py-8 shadow-lg">
           <div className="space-y-4">
             <h2 className="text-center text-4xl font-semibold">
@@ -142,14 +133,15 @@ const Info = () => {
               Solved puzzle answers should be entered and submitted manually.
               Answers for Math Mania count{" "}
               <span className="font-bold text-yellow-300">
-                only alphanumeric characters, the decimal point, and the negative sign
+                only alphanumeric characters, the decimal point, and the
+                negative sign
               </span>{" "}
               as valid characters.
             </p>
             <p className="text-lg leading-relaxed">
-              For Puzzle Paradise and Riddling Rewind, the answer&apos;s character
-              count is given in the top left corner. Puzzle answers are
-              submitted automatically when the character count is reached.
+              For Puzzle Paradise and Riddling Rewind, the answer&apos;s
+              character count is given in the top left corner. Puzzle answers
+              are submitted automatically when the character count is reached.
               Answers for these two series count{" "}
               <span className="font-bold text-yellow-300">
                 only alphanumeric characters and spaces

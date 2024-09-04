@@ -21,7 +21,7 @@ const PuzzleLayout: React.FC<PuzzleLayoutProps> = ({
 }) => {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      <div className="mb-8 flex flex-wrap justify-center gap-4 px-8">
+      <div className="mt-10 lg:mt-0 mb-4 sm:mb-8 flex flex-wrap justify-center gap-1 sm:gap-4 px-2 sm:px-8 md:px-12">
         {Array.from({ length: seriesPuzzleCount[activeSeries] }, (_, index) => (
           <PuzzleButton
             key={index + 1}

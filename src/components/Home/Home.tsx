@@ -28,7 +28,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <div className={`flex flex-col w-full max-h-screen ${isPlaying ? "touch-auto" : "touch-none"}`}>
       <TopCover isPlaying={isPlaying} />
       <div className="flex h-screen flex-col">
       <Header isSeries={isSeries.isSeries} title={isSeries.title} />

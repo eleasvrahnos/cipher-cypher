@@ -9,7 +9,7 @@ interface TopCoverProps {
 const TopCover: React.FC<TopCoverProps> = ({ isPlaying }) => {
   return (
     <div
-      className={`fixed left-0 right-0 top-0 z-50 flex h-1/2 flex-col justify-end bg-black p-4 text-center text-white transition-transform duration-700 ${
+      className={`fixed left-0 right-0 top-0 z-50 flex h-[51%] flex-col justify-end bg-black p-4 text-center text-white transition-transform duration-700 ${
         isPlaying && "-translate-y-[100%]"
       }`}
     >

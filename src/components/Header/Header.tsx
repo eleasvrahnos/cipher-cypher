@@ -25,13 +25,13 @@ const Header: React.FC<HeaderProps> = ({ isSeries, title }) => {
       }
     } catch (error) {
       console.error("Error checking login status:", error);
-  
+
       // Optionally clear the token if there's an error with login
       cookie.remove("token");
     }
     return { auth: false };
   };
-  
+
   // Occurs every time a new username is set
   useEffect(() => {
     const authenticate = async () => {
@@ -56,22 +56,27 @@ const Header: React.FC<HeaderProps> = ({ isSeries, title }) => {
   };
 
   return (
-    <div className="relative flex h-[5%] items-center bg-black text-white">
+    <div
+      className="relative flex items-center bg-black text-white"
+      style={{
+        height: `calc(5% + env(safe-area-inset-top))`, // Adjusts height to account for the top safe area
+        paddingTop: "env(safe-area-inset-top)", // Adds padding at the top for iOS safe area
+      }}
+    >
       <button
         onClick={handleBoards}
-        className="absolute left-5 rounded-lg border border-white px-1 hover:bg-white hover:text-black"
+        className="absolute left-2 sm:left-5 rounded-lg border border-white px-1 hover:bg-white hover:text-black text-sm sm:text-md"
       >
-        LEADERBOARDS
+        BOARDS
       </button>
-      <h1 className="mx-auto text-2xl font-bold">
+      <h1 className="mx-auto text-lg sm:text-2xl font-bold">
         {isSeries ? title : "CIPHER CYPHER"}
       </h1>
       {username ? (
-        <div className="absolute right-5 flex flex-row gap-3">
-          <h1>{username}</h1>
+        <div className="absolute right-2 flex flex-row">
           <button
             onClick={handleLogout}
-            className="rounded-lg border border-white px-1 hover:bg-white hover:text-black"
+            className="rounded-lg border border-white px-1 hover:bg-white hover:text-black text-sm sm:text-md"
           >
             LOGOUT
           </button>
@@ -79,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ isSeries, title }) => {
       ) : (
         <button
           onClick={() => router.push("/login")}
-          className="absolute right-5 rounded-lg border border-white px-1 hover:bg-white hover:text-black"
+          className="absolute right-5 rounded-lg border border-white px-1 hover:bg-white hover:text-black text-sm sm:text-md"
         >
           LOGIN
         </button>

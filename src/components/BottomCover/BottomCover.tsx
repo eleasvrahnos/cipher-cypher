@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import IconList from "../IconList/IconList";
+import { useUserContext } from "@/components/UserContext/UserContext"; // Import the context
+import cookie from "js-cookie";
+import axios from "axios";
 
 // onPlay is called when Bottom Cover Play button is clicked
 interface BottomCoverProps {
@@ -8,25 +11,41 @@ interface BottomCoverProps {
 }
 
 const BottomCover: React.FC<BottomCoverProps> = ({ isPlaying, onPlay }) => {
-  const [isMobile, setIsMobile] = useState(false);
 
+  const { username, setUsername } = useUserContext(); // Use the context
+
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // Checks if token exists and is valid
+  const isLogin = async () => {
+    try {
+      const token = cookie.get("token");
+      if (token) {
+        const res = await axios.post("/api/auth/isLogin", { token });
+        return res.data;
+      }
+    } catch (error) {
+      console.error("Error checking login status:", error);
+
+      // Optionally clear the token if there's an error with login
+      cookie.remove("token");
+    }
+    return { auth: false };
+  };
+
+  // Occurs every time a new username is set
   useEffect(() => {
-    // Function to check the screen width and update state
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768); // Assuming 768px is the breakpoint for mobile devices
+    const authenticate = async () => {
+      const loggedIn = await isLogin();
+      if (loggedIn.auth) {
+        setUsername(loggedIn.data.username); // Set the username in the context
+      }
     };
-
-    // Initial check
-    checkScreenSize();
-
-    // Add event listener for window resize
-    window.addEventListener("resize", checkScreenSize);
-
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", checkScreenSize);
-    };
-  }, []);
+    authenticate();
+    setTimeout(() => {
+      setLoading(false);
+    }, 250);
+  }, [setUsername]);
 
   return (
     <div
@@ -34,17 +53,13 @@ const BottomCover: React.FC<BottomCoverProps> = ({ isPlaying, onPlay }) => {
         isPlaying && "translate-y-[100%]"
       }`}
     >
-      <div className="flex flex-col items-center gap-5 h-12">
-        {isMobile ? (
-          <p className="text-center">Please use a desktop device to play.</p>
-        ) : (
-          <button
-            className="border border-white p-2 rounded-xl w-20 hover:bg-white hover:text-black transition"
-            onClick={onPlay}
-          >
-            Play
-          </button>
-        )}
+      <div className="flex h-12 flex-col items-center gap-5">
+        <button
+          className="w-auto rounded-xl border border-white p-2 transition hover:bg-white hover:text-black"
+          onClick={onPlay}
+        >
+          Play as {loading ? "..." : (username ? username : "Guest")}
+        </button>
         <IconList />
       </div>
     </div>

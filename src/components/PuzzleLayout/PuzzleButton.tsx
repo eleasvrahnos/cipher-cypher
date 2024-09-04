@@ -19,7 +19,7 @@ const PuzzleButton: React.FC<PuzzleButtonProps> = ({
 }) => (
   <button
     key={puzzleID}
-    className={`relative aspect-square rounded-lg text-4xl font-bold text-white transition-colors duration-150 hover:text-opacity-0 ${meta ? "h-36 p-4" : "flex h-28 items-center justify-center"} ${completed ? "bg-green-500 hover:bg-green-700" : "bg-blue-500 hover:bg-blue-700"}`}
+    className={`relative aspect-square rounded-lg text-4xl font-bold text-white transition-colors duration-150 hover:text-opacity-0 ${meta ? "h-28 sm:h-36" : "flex h-16 sm:h-20 lg:h-24 xl:h-28 items-center justify-center"} ${completed ? "bg-green-500 hover:bg-green-700" : "bg-blue-500 hover:bg-blue-700"}`}
     onClick={() => handlePuzzleClick(puzzleID)}
   >
     {meta ? "META" : puzzleID}
