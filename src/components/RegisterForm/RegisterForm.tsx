@@ -109,7 +109,6 @@ const RegisterForm = () => {
             </label>
             <input
               id="password"
-              pattern="/^[a-zA-Z0-9~`!@#$%^&*()_\-+={[}\]|\\:;<,>.?/]+$/"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -127,7 +126,6 @@ const RegisterForm = () => {
             </label>
             <input
               id="confirm-password"
-              pattern="/^[a-zA-Z0-9~`!@#$%^&*()_\-+={[}\]|\\:;<,>.?/]+$/"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
