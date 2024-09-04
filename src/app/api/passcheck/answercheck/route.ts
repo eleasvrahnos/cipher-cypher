@@ -27,6 +27,10 @@ export async function POST(request: Request): Promise<Response> {
 
   await connectToDatabase(); // Ensure database connection
 
+  // Start a session for transaction
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
     // Ensure puzzleNoVisible is a number and within the valid index range
     const isValid =
@@ -38,36 +42,51 @@ export async function POST(request: Request): Promise<Response> {
 
     // Validate activeSeries, puzzleNoVisible, and answer
     if (isValid && storedAnswers[activeSeries][puzzleNoVisible - 1] === lowerAnswer) {
-      const user = await User.findOne({ username: username });
+      const user = await User.findOne({ username: username }).session(session);
       if (user) {
+        let updateRequired = false;
         if (activeSeries === "mathmania") {
           if (!user.mathmaniaSolved.includes(puzzleNoVisible)) {
             user.mathmaniaSolved.push(puzzleNoVisible);
+            updateRequired = true;
           }
         } else if (activeSeries === "puzzleparadise") {
           if (!user.puzzleparadiseSolved.includes(puzzleNoVisible)) {
             user.puzzleparadiseSolved.push(puzzleNoVisible);
+            updateRequired = true;
           }
         } else if (activeSeries === "riddlingrewind") {
           if (!user.riddlingrewindSolved.includes(puzzleNoVisible)) {
             user.riddlingrewindSolved.push(puzzleNoVisible);
+            updateRequired = true;
           }
         }
-  
-        await user.save();
+
+        if (updateRequired) {
+          await user.save({ session });
+        }
       }
+
+      await session.commitTransaction();
+      session.endSession();
 
       return new Response(JSON.stringify({ solvedStatus: true }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       });
     } else {
+      await session.abortTransaction();
+      session.endSession();
+
       return new Response(JSON.stringify({ solvedStatus: false }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       });
     }
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+
     console.error('Submission error:', error);
     return new Response(JSON.stringify({ error: 'Submission error' }), {
       status: 500,
