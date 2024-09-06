@@ -75,7 +75,7 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
       },
       {
         13: {
-          bullet: "What to do in special cases is clarified below.",
+          bullet: "Each symbol directs you in some way. What to do in special cases is clarified below.",
           date: "2024-09-06",
         },
       },
