@@ -15,6 +15,13 @@ interface MainAreaProps {
   activeTitle: (title: string) => void;
 }
 
+interface Hint {
+  [key: number]: {
+    bullet: string;
+    date: string;
+  };
+}
+
 const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
   // Use the hook to get username
   const { username } = useUserContext();
@@ -40,11 +47,65 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
   // Notes data
   const notesData = [
     [{ bullet: "No notes to display.", date: "" }],
-    [{ bullet: "No notes to display.", date: "" }],
+    [ { bullet: "Hints added for 4, 8, 13, 14", date: "2024-09-06" } ],
     [
       { bullet: "Errors fixed in 2, 7, 17", date: "2024-09-03" },
       { bullet: "Errors fixed in 16", date: "2024-09-05" },
       { bullet: "Spelling error fixed in Meta", date: "2024-09-06" },
+      { bullet: "Hints added for 3, 18, 22", date: "2024-09-06" }
+    ],
+  ];
+
+  const hintsData = [
+    [{ 0: { bullet: "placeholder", date: "" } }],
+    [
+      {
+        4: {
+          bullet:
+            "First is a puzzle for the eyes, second is a puzzle for the brain.",
+          date: "2024-09-06",
+        },
+      },
+      {
+        8: {
+          bullet:
+            "Firstly, you must do to the lock what has been done to the key.",
+          date: "2024-09-06",
+        },
+      },
+      {
+        13: {
+          bullet: "What to do in special cases is clarified below.",
+          date: "2024-09-06",
+        },
+      },
+      {
+        14: {
+          bullet:
+            "In order to solve a puzzle, you must first put the pieces together.",
+          date: "2024-09-06",
+        },
+      },
+    ],
+    [
+      {
+        3: {
+          bullet: "The wheels have the same method, but differently measured.",
+          date: "2024-09-06",
+        },
+      },
+      {
+        18: {
+          bullet: "Different letters can represent the same property.",
+          date: "2024-09-06",
+        },
+      },
+      {
+        22: {
+          bullet: "All mazes are created equal.",
+          date: "2024-09-06",
+        },
+      },
     ],
   ];
 
@@ -199,7 +260,10 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
       {seriesStart && newSeriesVisible && (
         <div className="absolute z-20 flex h-full w-full flex-col items-center justify-center">
           <BackButton handleBackClick={handleBackClick} />
-          <NotesButton handleNotesClick={handleNotesClick} />
+          <NotesButton
+            puzzleVisible={puzzleVisible[0]}
+            handleNotesClick={handleNotesClick}
+          />
           {!puzzleVisible[0] ? (
             <PuzzleLayout
               seriesIDtoName={seriesIDtoName}
@@ -224,14 +288,55 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
       {notesOpen && (
         <div className="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-75">
           <div className="w-5/6 max-w-sm rounded-md bg-white p-6 shadow-lg">
-            <h2 className="mb-4 text-xl font-bold">Notes</h2>
+            <h2 className="mb-4 text-xl font-bold">
+              {puzzleVisible[0] ? "Hints" : "Notes"}
+            </h2>
             <ul>
-              {notesData[activeSeries].map((note, index) => (
-                <li key={index} className="mb-2 flex flex-col">
-                  <span className="text-sm text-gray-500">{note.date}</span>
-                  <strong>{note.bullet}</strong>
-                </li>
-              ))}
+              {puzzleVisible[0] ? (
+                // Check if hintsData[activeSeries] is an array and has items
+                hintsData[activeSeries]?.length ? (
+                  // Determine if puzzleVisible[1] exists in any hint object
+                  hintsData[activeSeries]?.some(
+                    (hint) => (hint as Hint)[puzzleVisible[1]],
+                  ) ? (
+                    hintsData[activeSeries]?.map((hint, index) => {
+                      // Type assertion to indicate that hint conforms to the Hint interface
+                      const typedHint = hint as Hint;
+
+                      // Access the key-value pair where the key matches puzzleVisible[1]
+                      const bulletData = typedHint[puzzleVisible[1]];
+
+                      if (bulletData) {
+                        return (
+                          <li key={index} className="mb-2 flex flex-col">
+                            <span className="text-sm text-gray-500">
+                              {bulletData.date || "No date available"}
+                            </span>
+                            <strong>
+                              {bulletData.bullet || "No hints available."}
+                            </strong>
+                          </li>
+                        );
+                      } else {
+                        // This will not be reached due to the previous check
+                        return null;
+                      }
+                    })
+                  ) : (
+                    <li>No hints to display.</li>
+                  )
+                ) : (
+                  <li>No hints to display.</li>
+                )
+              ) : (
+                // Mapping for notesData when puzzleVisible[0] is false
+                notesData[activeSeries]?.map((note, index) => (
+                  <li key={index} className="mb-2 flex flex-col">
+                    <span className="text-sm text-gray-500">{note.date}</span>
+                    <strong>{note.bullet}</strong>
+                  </li>
+                )) || <li>No notes available for this series</li>
+              )}
             </ul>
             <button
               onClick={() => setNotesOpen(false)}
