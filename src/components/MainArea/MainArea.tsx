@@ -39,18 +39,14 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
   const [notesOpen, setNotesOpen] = useState<boolean>(false);
   // Notes data
   const notesData = [
+    [{ bullet: "No notes to display.", date: "" }],
+    [{ bullet: "No notes to display.", date: "" }],
     [
-      { bullet: "No notes to display.", date: "" },
-    ],
-    [
-      { bullet: "No notes to display.", date: "" }
-    ],
-    [
-      { bullet: "Errors fixed in 2, 7, 17", date: "2024-09-03" }, { bullet: "Errors fixed in 16", date: "2024-09-05" },
+      { bullet: "Errors fixed in 2, 7, 17", date: "2024-09-03" },
+      { bullet: "Errors fixed in 16", date: "2024-09-05" },
+      { bullet: "Spelling error fixed in Meta", date: "2024-09-06" },
     ],
   ];
-
-
 
   // Occurs whenever seriesStart changes, affects transition time of background cards
   useEffect(() => {
@@ -70,18 +66,22 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
           Array(9).fill(null),
           Array(18).fill(null),
           Array(23).fill(null),
-        ])
+        ]);
       }, 250);
     }
   }, [username, puzzleVisible]);
-  
+
   // Occurs whenever activeSeries or username changes, layout status is updated for preloading
   useEffect(() => {
     const fetchAnswersForAllSeries = async () => {
       try {
         const updatedPuzzleStatuses = [...puzzleStatuses];
         // Loop through each series
-        for (let seriesIndex = 0; seriesIndex < seriesPuzzleCount.length; seriesIndex++) {
+        for (
+          let seriesIndex = 0;
+          seriesIndex < seriesPuzzleCount.length;
+          seriesIndex++
+        ) {
           // If username exists, fetch puzzle statuses for the current series
           if (username) {
             const response = await axios.post("/api/passcheck/layoutstatus", {
@@ -89,27 +89,25 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
               statusesToSend: JSON.stringify(puzzleStatuses[seriesIndex]),
               username,
             });
-  
+
             // Update the puzzle statuses for the current series
             updatedPuzzleStatuses[seriesIndex] = response.data.statuses;
           }
         }
         // Set the updated puzzle statuses for all series
         setPuzzleStatuses(updatedPuzzleStatuses);
-  
       } catch (err: any) {
         console.error("Error fetching answers for all series:", err);
       }
     };
-  
+
     // Delay the execution to ensure rendering happens only after the user is loaded
     const timer = setTimeout(() => {
       fetchAnswersForAllSeries();
     }, 200); // Set timeout for 200 milliseconds
-  
+
     // Clean up the timeout if the component is unmounted or dependencies change
     return () => clearTimeout(timer);
-  
   }, [username]);
 
   // handleCardClick - Starts a series when user clicks on a third card
@@ -162,7 +160,7 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
       case "puzzleparadise":
         return 1;
       case "riddlingrewind":
-        return 2;    
+        return 2;
       default:
         return 0;
     }
@@ -174,7 +172,6 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
     puzzleNoVisible: number,
     newStatus: boolean | null,
   ) => {
-
     const seriesID = seriesNametoID(activeSeries);
     setPuzzleStatuses((puzzleStatuses) => {
       const updatedStatuses = [...puzzleStatuses];
@@ -184,7 +181,6 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
       return updatedStatuses;
     });
   };
-
 
   return (
     <div className="relative flex flex-grow">
@@ -219,33 +215,33 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
                 typeof puzzleVisible[1] === "number" ? puzzleVisible[1] : 0
               }
               onPuzzleSolved={handlePuzzleSolved}
-              puzzleSolved={puzzleStatuses[activeSeries][puzzleVisible[1]-1]}
+              puzzleSolved={puzzleStatuses[activeSeries][puzzleVisible[1] - 1]}
             />
           )}
         </div>
       )}
       {/* Notes Modal */}
       {notesOpen && (
-            <div className="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-75">
-              <div className="bg-white p-6 rounded-md shadow-lg max-w-sm w-5/6">
-                <h2 className="text-xl font-bold mb-4">Notes</h2>
-                <ul>
-                  {notesData[activeSeries].map((note, index) => (
-                    <li key={index} className="mb-2 flex flex-col">
-                      <span className="text-sm text-gray-500">{note.date}</span>
-                      <strong>{note.bullet}</strong>
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={() => setNotesOpen(false)}
-                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          )}
+        <div className="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="w-5/6 max-w-sm rounded-md bg-white p-6 shadow-lg">
+            <h2 className="mb-4 text-xl font-bold">Notes</h2>
+            <ul>
+              {notesData[activeSeries].map((note, index) => (
+                <li key={index} className="mb-2 flex flex-col">
+                  <span className="text-sm text-gray-500">{note.date}</span>
+                  <strong>{note.bullet}</strong>
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={() => setNotesOpen(false)}
+              className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-white"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
