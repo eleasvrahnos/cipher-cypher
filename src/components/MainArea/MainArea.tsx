@@ -9,6 +9,7 @@ import PuzzleLayout from "../PuzzleLayout/PuzzleLayout";
 import PuzzleView from "../PuzzleView/PuzzleView";
 import axios from "axios";
 import { useUserContext } from "../UserContext/UserContext"; // Import the hook
+import NotesButton from "../NotesButton/NotesButton";
 
 interface MainAreaProps {
   activeTitle: (title: string) => void;
@@ -34,6 +35,22 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
     Array(18).fill(null),
     Array(23).fill(null),
   ]);
+  // notesOpen - Whether the user has Notes opened within a series
+  const [notesOpen, setNotesOpen] = useState<boolean>(false);
+  // Notes data
+  const notesData = [
+    [
+      { bullet: "No notes to display.", date: "" },
+    ],
+    [
+      { bullet: "No notes to display.", date: "" }
+    ],
+    [
+      { bullet: "Errors corrected within 16", date: "2024-09-05" },
+    ],
+  ];
+
+
 
   // Occurs whenever seriesStart changes, affects transition time of background cards
   useEffect(() => {
@@ -114,6 +131,11 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
     }
   };
 
+  // handleNotesClick - Occurs when NOTES button is clicked (shows errata and hints)
+  const handleNotesClick = () => {
+    setNotesOpen(true);
+  };
+
   // handlePuzzleClick - Occurs when user selects a puzzle
   const handlePuzzleClick = (puzzleID: number) => {
     setPuzzleVisible([true, puzzleID]);
@@ -181,6 +203,7 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
       {seriesStart && newSeriesVisible && (
         <div className="absolute z-20 flex h-full w-full flex-col items-center justify-center">
           <BackButton handleBackClick={handleBackClick} />
+          <NotesButton handleNotesClick={handleNotesClick} />
           {!puzzleVisible[0] ? (
             <PuzzleLayout
               seriesIDtoName={seriesIDtoName}
@@ -201,6 +224,28 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
           )}
         </div>
       )}
+      {/* Notes Modal */}
+      {notesOpen && (
+            <div className="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-75">
+              <div className="bg-white p-6 rounded-md shadow-lg max-w-md w-5/6">
+                <h2 className="text-xl font-bold mb-4">Notes</h2>
+                <ul>
+                  {notesData[activeSeries].map((note, index) => (
+                    <li key={index} className="mb-2 flex flex-col">
+                      <span className="text-sm text-gray-500">{note.date}</span>
+                      <strong>{note.bullet}</strong>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={() => setNotesOpen(false)}
+                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
     </div>
   );
 };
