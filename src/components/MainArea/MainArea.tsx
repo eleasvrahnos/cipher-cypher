@@ -46,7 +46,7 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
       { bullet: "No notes to display.", date: "" }
     ],
     [
-      { bullet: "Errors corrected within 16", date: "2024-09-05" },
+      { bullet: "Errors fixed in 2, 7, 17", date: "2024-09-03" }, { bullet: "Errors fixed in 16", date: "2024-09-05" },
     ],
   ];
 
@@ -227,7 +227,7 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
       {/* Notes Modal */}
       {notesOpen && (
             <div className="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-75">
-              <div className="bg-white p-6 rounded-md shadow-lg max-w-md w-5/6">
+              <div className="bg-white p-6 rounded-md shadow-lg max-w-sm w-5/6">
                 <h2 className="text-xl font-bold mb-4">Notes</h2>
                 <ul>
                   {notesData[activeSeries].map((note, index) => (
