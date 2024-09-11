@@ -52,7 +52,8 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
       { bullet: "Errors fixed in 2, 7, 17", date: "2024-09-03" },
       { bullet: "Errors fixed in 16", date: "2024-09-05" },
       { bullet: "Spelling error fixed in Meta", date: "2024-09-06" },
-      { bullet: "Hints added for 3, 18, 22", date: "2024-09-06" }
+      { bullet: "Hints added for 3, 18, 22", date: "2024-09-06" },
+      { bullet: "Spelling error fixed in 11", date: "2024-09-10" }
     ],
   ];
 
