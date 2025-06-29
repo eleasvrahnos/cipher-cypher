@@ -76,7 +76,8 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
       },
       {
         13: {
-          bullet: "Each symbol directs you in some way. What to do in special cases is clarified below.",
+          bullet:
+            "Each symbol directs you in some way. What to do in special cases is clarified below.",
           date: "2024-09-06",
         },
       },
@@ -87,12 +88,45 @@ const MainArea: React.FC<MainAreaProps> = ({ activeTitle }) => {
           date: "2024-09-06",
         },
       },
+      {
+        17: {
+          bullet: "Find the four parts of the grid that can make a combination.",
+          date: "2025-06-28",
+        },
+      },
     ],
     [
+      {
+        2: {
+          bullet:
+            "The arrows guide you across the board, but know when to strike.",
+          date: "2025-06-28",
+        },
+      },
       {
         3: {
           bullet: "The wheels have the same method, but differently measured.",
           date: "2024-09-06",
+        },
+      },
+      {
+        6: {
+          bullet:
+            "To solve tough problems, people usually break it down into smaller parts and solve each part from the ground up.",
+          date: "2025-06-28",
+        },
+      },
+      {
+        12: {
+          bullet: "Using the key, you must cover before you uncover.",
+          date: "2025-06-28",
+        },
+      },
+      {
+        14: {
+          bullet:
+            "You were given the start to the reading method and to the reading order. Don't get distracted.",
+          date: "2025-06-28",
         },
       },
       {
